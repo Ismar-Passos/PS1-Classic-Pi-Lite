@@ -33,8 +33,7 @@ MODULES=(
 )
 
 for module in "${MODULES[@]}"; do
-    info "Executando módulo: $module"
-    bash "$PROJECT_DIR/modules/$module"
+    info "Executando módulo $module"
+    source "$PROJECT_DIR/modules/$module"
+    success "Módulo concluído: $module"
 done
-
-success "Instalação concluída."

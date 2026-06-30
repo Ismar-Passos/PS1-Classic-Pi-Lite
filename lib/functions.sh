@@ -19,3 +19,26 @@ check_internet() {
     success "Internet OK"
 
 }
+
+check_disk_space() {
+
+    FREE=$(df --output=avail / | tail -1)
+
+    MIN=$((3 * 1024 * 1024))
+
+    if [ "$FREE" -lt "$MIN" ]; then
+        error "Espaço insuficiente."
+        exit 1
+    fi
+}
+
+check_overlay() {
+
+    if mount | grep -q overlay; then
+        warning "OverlayFS detectado."
+
+        warning "Desative o modo Read Only antes de continuar."
+
+        exit 1
+    fi
+}
